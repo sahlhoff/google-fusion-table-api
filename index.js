@@ -25,7 +25,8 @@ function Fusion (options) {
   var self = this;
 
   function get (url, callback){
-    console.log('self.googleAuth = ', self.googleAuth);
+    //if(!self.googleAuth)
+      //throw new FusionError('Must use fusion.clientLogin(username, password) to use Fusion Tables');
     var reqObject = {
       url: url,
       headers: {
@@ -51,10 +52,15 @@ function Fusion (options) {
   }
 
   function post (url, param, callback){
+    //if(!self.googleAuth)
+      //throw new FusionError('Must use fusion.clientLogin(username, password) to use Fusion Tables');
     var body = JSON.stringify(param);
     var reqObject = {
       url: url,
-      body: body
+      body: body,
+      headers: {
+        'Authorization': 'GoogleLogin auth='+self.googleAuth
+      }
     }
 
     request.post(reqObject, function (err, res, data){
